@@ -1,0 +1,28 @@
+Message data for a new database on Atlas
+
+const messages= [
+    {
+        "message: "Hello, my dog is lost, please help me find her.",
+        "user": "Joanne",
+        "date": "3/5/2025",
+        "secret": false
+    },
+    {
+        "message": "Hi. I had a date with Jennifer. It went really well.",
+        "user": "Devon",
+        "date": "2/15/2025",
+        "secret": true
+    },
+    {
+        "message": "Quote of the day: No man can understand a concept that his pay check prevents him from understanding.",
+        "user": "Akshat",
+        "date": "1/25/2025",
+        "secret": false
+    },
+    {
+        "message": "Have a lovely Holiday weekend!",
+        "user": "Carleen",
+        "date": "1/17/2025",
+        "secret": false
+    }
+]

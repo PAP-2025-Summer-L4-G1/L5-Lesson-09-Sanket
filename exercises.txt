@@ -1,0 +1,123 @@
+Exercise 1
+We're going to use a remote database rather than a local install as with SQL
+Sign up for Mongodb Atlas
+
+1. Sign up for Atlas
+Go to:
+https://www.mongodb.com/
+Click -> Try Free
+Fill out the form
+Verify your account via email
+Login
+Click -> Develop & Deploy - Visit MongoDB Atlas
+
+2. Create your first database cluster 
+Follow your instructor's demo and explore the Atlas interface
+Click -> Browse Collections
+Click -> Create Database (white button)
+Name the database: secret_message
+Name the colection: messages
+Leave the default preferences
+
+3. Create a user for the cluster
+On the Atlas website, navigate to the Overview page
+In the left side, under "security"
+Click -> Database Acess
+Click -> Add New DataBase User (green button)
+Select Password authentification
+Fill in the username, use something different than your name
+Fill in a strong password. Copy it to a text file so you don't lose it.
+Leave all default settings
+Click -> Add User (green button)
+
+4. Allow acces to the database from your computer
+On the Atlas website, navigate to the Overview page
+In the left side, under "security"
+Click -> Network Acess
+Click -> My IP Address
+If you get conection errors later, you can select the less secure "connect from anywhere".
+
+5. Get the connection string for the database
+On the Atlas website, in the left sidebar, click -> Overview
+Click -> Connect (the green button)
+Click -> Drivers
+Copy and paste the connection string into a text file so you don't lose it.
+
+_______________________________________________________
+
+Exercise 2: Set up Environment variables
+You need to keep that connection string private. Never share it with anyone, or push it to Github
+1. In the terminal, run:
+git config --global core.excludesfile .env
+2. Create a .env file
+3. Inside .env create variables for:
+DB_CONNECTION
+DB_NAME
+DB_COLLECTION_NAME
+PORT
+4. Set each equal to the value you got from or created in Atlas
+Hint: Do not put quotes around string values
+5. In the terminal run: npm install --save-dev dotenv
+
+6. Create a new file connect.js
+7. Inside connect.js, require .env using .config()
+Create variables for all the DB environment variables 
+using process.env, like this:
+const atlasURI = process.env.DB_CONNECTION;
+
+_______________________________________________________
+
+Exercise 3: Connect to the database
+
+1. In the terminal, run:
+npm install mongodb
+In connect.js:
+2. Import mongodb using require
+assign it a const of {MongoClient}
+3. Use the new keyword to create a new instance of MongoClient, pass it the variable you assigned to DB_CONNECTION, and assign it a constant: client
+const client = new MongoClient(atlasURI);
+4. Create an async function: connectMongoDB
+5. Inside connectMongoDB(), 
+Add a try... catch block
+Inside try, 
+    await client.connect();
+    console.log("Connected to database");
+Inside catch, console.error(e);
+
+7. In the terminal, run connect.js 
+If you see no errors, your connection should be working
+You can also check on Atlas, click -> View monitoring
+You should see a spike in the connections panel
+_______________________________________________________
+
+Exercise 4:
+Only start the server if there is a connection to the database
+
+In connect.js,
+1. Export connectMongoDB as a module
+
+In index.js, 
+1. Use require to import connectMongoDB from connect.js
+2. Create an async arrow function expression and assign it a constant: start
+3. Inside start, add a try... catch block
+4. Inside try, 
+await connectMongoDb()
+cut and paste the code that starts the server
+5. Inside catch, log any errors
+6. Call start()
+
+In the terminal, run npm start
+______________________________________________________
+
+Practice Session
+
+Have a look inside the public folder, and launch index.html with Live Server. The app is growing! There is a new form to fill out. Eventually, our messaging app will need to store 4 pieces of data for each message, using these keys:
+
+message
+user
+date
+secret
+
+MongoDB stores data in documents containing key (or field) and value pairs. You know how key and value pairs work!
+
+Navigate to your Atlas account. Click Browse collections and find your secret_message collection. Click the INSERT DOCUMENT button. In the pop-up, type a key and value for each data record. Use the sample messages in messages.txt. Add at least 3 new records, and take screenshot of the results.
