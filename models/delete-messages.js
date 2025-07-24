@@ -1,0 +1,2 @@
+const { getCollection } = require('../connect');
+

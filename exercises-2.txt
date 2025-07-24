@@ -1,0 +1,134 @@
+Get Prepared
+1. Open your Lesson 09 folder in a terminal and run npm start. Make sure your code is working and contains no errors. Stop the server.
+
+Instructor, if a student missed Lesson 09, fork the Lesson 10 student code.
+
+___________________________________________________________
+Exercise 1
+
+1. Create a new folder: models
+Inside models, create 4 new files:
+create-message.js
+read-messages.js
+update-message.js
+delete-message.js 
+
+_______________________________________________________
+Exercise 2: Connecting to the collection
+Inside connect.js:
+1. Create an arrow function expression and assign it a constant:
+getCollection
+2. Inside the arrow function, return the collection by passing db() and collection() the variables you assigned when importing the environment variables for DB_NAME and DB_COLLECTION_NAME
+return client.db(_____).collection(_____);
+3. Add getCollection to your module.exports
+4. Inside the files 
+create-message.js, 
+read-messages.js, 
+update-message.js, 
+delete-message.js:
+Use require to import getCollection from connect.js
+const { getCollection } = require('../connect');
+
+_______________________________________________________
+Exercise 3: CRUD create 
+In create-message.js: 
+1. Create an async function: createNewMessage, with 1 parameter: newMessage
+Inside createNewMessage,
+2. Create a const, db, set its value to getCollection()
+3. Add a try… catch block
+Inside try, create a constant: result, and set its value to:
+await db.insertOne(newMessage);
+Log result in the console
+return result
+4. Inside catch, log errors in the console
+5. Export createNewMessage
+
+In index.js, just above the start function: 
+6. Add a comment to mark an area for adding your query test scripts so you can easily find them later 
+(we will eventually remove these)
+7. Use require to import createNewMessage from create-message.js
+8. Create a constant: newMessage, set its value to one of the message objects from messages.txt (copy & paste)
+9. Call createNewMessage() passing it newMessage
+10. In the terminal run: npm start
+
+_______________________________________________________
+Exercise 4: CRUD Read
+In read-messages.js 
+1. Create an async function: getAllMessages
+with 1 parameter: isSecret
+2. Inside getAllMessages,
+Create a const, db, set its value to getCollection()
+3. Add a try… catch block
+Inside try, create a constant: results, and set its value to:
+await db.find({secret: isSecret}).toArray();
+Log results in the console
+return results
+4. Inside catch, log errors in the console
+5. Export getAllMessages
+
+In index.js
+6. Comment out the query test code from the previous exercise
+7. Use require to import getAllMessages from read-messages.js
+8. Call getAllMessages() passing it false
+9. In the terminal run: npm start
+
+_______________________________________________________
+Exercise 5: CRUD Update
+
+In update-message.js 
+1. Create an async function: updateMessage
+with 2 parameters: userName, newMessage
+2. Inside updateMessage,
+Create a const, db, set its value to getCollection()
+3. Add a try… catch block
+Inside try, create a constant: results, 
+set its value to the following:
+await db.updateOne({user: userName }, { $set: { message: newMessage }} );
+Log results in the console
+return results
+4. Inside catch, log errors in the console
+5. Export updateMessage
+
+Pick one of your messages to update, and note the value of the 
+user field. Also, think a new message to write.
+In index.js
+6. Comment out the query test code from the previous exercise
+7. Use require to import updateMessage from update-message.js
+8. Call updateMessage() passing it string values for userName and newMessage
+9. In the terminal run: npm start
+
+_______________________________________________________
+Exercise 5: CRUD delete
+In delete-message.js 
+1. Create an async function: deleteMessage
+with 2 parameters:  fieldId, valueId
+2. Inside deleteMessage,
+Create a const, db, set its value to getCollection()
+3. Add a try… catch block
+Inside try, create a constant: results, 
+set its value to the following:
+await db.deleteOne({ fieldId: valueId });
+Log results in the console
+return results
+4. Inside catch, log errors in the console
+5. Export deleteMessage
+
+Pick one of your messages to delete, and note one of the 
+field and value pairs.
+In index.js
+6. Comment out the query test code from the previous exercise
+7. Use require to import deleteMessage from delete-message.js
+8. Call deleteMessage() passing it string values for fieldId and valueId
+9. In the terminal run: npm start
+
+_______________________________________________________
+Practice Session
+
+Function getAllMessages() has a parameter isSecret
+The value of isSecret must be a boolean, but eventually we will be getting a value for isSecret from a website form. The words true or false might be strings.
+
+1. Inside getAllMessages(), before the existing code, check to make sure isSecret contains a boolean value. If it doesn't, convert it to a boolean.
+
+Feel free to search online for ways to do this, but don't ask AI to solve the problem. Simple, readable code is the goal.
+
+2. Uncomment the test code in index.html, test getAllMessages() sending it a string "true" or "false". Make sure your code works before you submit it.
