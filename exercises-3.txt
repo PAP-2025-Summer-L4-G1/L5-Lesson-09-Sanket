@@ -1,0 +1,83 @@
+Get Prepared
+Open your completed Lesson 10 project in VSCode
+In the terminal run: npm start
+Make sure your code is working and there are no errors
+Control "c" to quit the server
+
+If you missed previous lessons and/or do not have completed lesson 10 code, 
+ask your instructor for starter code.
+
+____________________________________________
+Exercise 1: Get all messages by running the database query on the API's dynamic home route
+
+In index.js:
+1. JSON is coming from the client request, add Express middleware to handle JSON:
+app.use(express.json());
+2. Before the home route code, use require to import getAllMessages from read-messages.js
+3. In app.get(), edit the route to make it variable: /:secret
+4. Edit the app.get() callback function to make it async
+5. Inside the callback function, 
+Before res.send(), call await getAllMessages() passing it req.params.secret
+(These params tell the route whether we're getting secret or non-secret messages)
+Assign it a constant: results
+6. Pass results to res.send()
+7. Log "GET request received on home page" in the console
+8. Test: In the terminal run: npm start 
+Launch index.html with Live Server, you should see your messages there.
+
+______________________________________________
+Exercise 2: Make the post route to create a new message and insert it into the database
+
+1. *** Delete the other test routes we made, we will be creating new ones ***
+
+2. Use require to import createNewMessage from create-message.js
+2. Create a new route using app.post(), set the route to: /message
+3. Make the callback function async. 
+Inside the callback function,
+4. Create a constant: newMessage, set its value to req.body
+5. Create a constant: results, set its value to await createNewMessage(newMessage);
+6. Use .sendStatus() to send a 201 code to the client
+7. Test: Try creating a new message using the form on the website. It should show up as the first one.
+
+_____________________________________________
+Exercise 3: Make a route for an update query
+
+In update-message.js:
+1. Use require to import the ObjectId class from mongodb
+2. Inside function updateMessage, change the userName parameter to: messageId 
+3. Use ObjectId.createFromHexString() to convert messageId to a validatable object
+assign it a constant: documentId
+4. Inside the try block, change the arguments of updateOne() to:
+{ _id: documentId }, { $set: newMessage }
+(We edit both arguments because the new frontend JavaScript includes the message field as part of its JSON.)
+
+In index.js
+5. Use require to import updateMessage from update-message.js
+6. Create a new route using app.patch(), set the route to: /message/:id
+7. Make the callback function async. 
+Inside the callback function,
+8. Create a new constant: editedMessage, set its value to req.body
+9. Create a new constant: results, set its value to await updateMessage(req.params.id, editedMessage);
+10. Send a status code of 200
+11. TEST: Try editing a message on the website. The page should reload and show the edited message first.
+
+____________________________________________
+Practice Session
+Get the delete route working by enabling it to delete a message from the database.
+The changes we'll make are very similar to those we made for the update (patch) route. 
+The Express route method is .delete(), but we can use it in the same way as the other Express route methods we've learned.
+In delete-message.js:
+1. Use require to import the ObjectId class from mongodb
+2. Inside function deleteMessage, edit the parameters, there should be only one: messageId
+3. Use ObjectId.createFromHexString() to convert messageId to a MongoDB id object
+assign it a constant: documentId
+4. Inside the try block, change the arguments of deleteOne() to send the _id field and documentId value
+
+In index.js
+5. Use require to import deleteMessage from delete-message.js
+6. Create a new route using app.delete(), set the route to: /message/:id
+7. Make the callback function async. 
+Inside the callback function,
+8. Create a new constant: messageId, to set its value, use the req object to get the id of the message
+9. Create a new constant: results, set its value to await call the function you imported in step 5, pass the function the message id.
+

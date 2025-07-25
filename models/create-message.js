@@ -15,11 +15,11 @@ const { getCollection } = require('../connect');
 async function createNewMessage(newMessage) {
     const db = getCollection();
     try {
-        const result = await db.insertOne(newMessage);
+        const result = await db.insertOne(newMessage); // .insertOne method
         console.log("Message inserted: ", result);
         return result;
     } catch(e) {
-        console.error(e);
+        console.log(e);
     }
 }
 

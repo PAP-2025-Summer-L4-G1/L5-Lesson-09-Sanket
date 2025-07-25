@@ -19,7 +19,7 @@ async function connectMongoDB() {
         await client.connect();
         console.log("Connected to the database");
     } catch(e) {
-        console.error(e);
+        console.log(e);
     }
 };
 
