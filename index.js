@@ -1,5 +1,6 @@
 const cors = require('cors');
 const express = require('express');
+const { createNewMessage } = require('./models/create-message') // Lesson 11 Exercise 2
 const { connectMongoDB } = require('./connect')
 
 const app = express();  
@@ -37,7 +38,7 @@ app.use(express.json());
 //     };
 // createNewMessage(newMessage);
 
-// Home route with db query
+// Home route with db query (GET)
 const { getAllMessages } = require('./models/read-messages');
 app.get('/:secret', async (req, res) => {
     const results = await getAllMessages(req.params.secret);
@@ -45,17 +46,24 @@ app.get('/:secret', async (req, res) => {
     console.log("GET request received on home page")
 });
 
-// Subroute
+// Subroute (GET)
 app.get('/message', (req, res) => {
     res.send("Surprise! I am a ninja!")
     console.log("GET request received on message route")
 });
 
-// Dynamic route
+// Dynamic route (POST)
 app.post('/message/:secret', (req, res) => {
     res.json({ secret: "Message received: " + req.params.secret });
     console.log("Secret message received by POST request")
 });
+
+// Lesson 11, Exercise 2
+app.post('/message'), async (req, res) => {
+    const newMessage = req.body;
+    const results = await createNewMessage(newMessage);
+    res.sendStatus(201);
+}
 
 //* ********************* Launching the server **************** */
 
